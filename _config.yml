@@ -23,8 +23,8 @@ twitter_username: motokiee
 github_username:  motokiee
 
 # Build settings
-markdown: redcarpet
-theme: jekyll-theme-minimal
+markdown: kramdown
+theme: minima
 gems:
   - jekyll-feed
 exclude:
