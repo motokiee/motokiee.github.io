@@ -2,7 +2,7 @@
 layout: post
 title:  "GitHubのreviewerをfilterする"
 date:   2017-01-25 19:00:00 +0900
-categories: GitHub
+categories: blog golang
 ---
 最近追加されたGitHubのReviewer機能。
 
