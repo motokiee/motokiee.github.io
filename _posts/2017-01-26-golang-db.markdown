@@ -1,0 +1,116 @@
+---
+layout: post
+title:  "GoでDBを使う"
+date:   2017-01-26 19:00:00 +0900
+categories: blog
+tags: golang
+---
+Goで作りたいWeb APIがある。そんでDBを使いたいので調べてみた。
+
+そもそもサーバサイドのアプリケーションは何回か書いたことがあるものの、いっつも環境構築とかでつまづいていたので書いていることが間違っているかもしれないので、その辺をご理解いただいた上で読んでいただきたい。
+
+- [GORM](https://github.com/jinzhu/gorm)
+  - マイグレーションもサポートされていて良さそう
+  - 知り合いとやっているプロジェクトでGoのWeb APIを作りかけたことがあったんだけど、その時にこれを選んでいた
+  - ただ、[この記事](http://qiita.com/umisama/items/c022b16101c48ffdbc6a#%E3%81%BE%E3%81%A8%E3%82%81)では"魔法感がある"と表現されていて、Railsみたいな魔法チックなもの苦手なのでどうしよう
+
+時間の都合上、gormしか調べられなかった...。
+
+## とりあえず触ってみた
+
+触ってみないことにはなんとも言えないのでとりあえず触ってみた。ひとまずsqlite3でやってみた。
+
+```golang
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"os"
+
+	"github.com/jinzhu/gorm"
+	_ "github.com/mattn/go-sqlite3"
+)
+
+func main() {
+
+	initDB()
+
+	http.HandleFunc("/", hello)
+	fmt.Println("listnening...")
+	fmt.Println(loadFirstUser().Name)
+	http.ListenAndServe(":"+os.Getenv("PORT"), nil)
+}
+
+func hello(res http.ResponseWriter, req *http.Request) {
+	user := loadFirstUser()
+	fmt.Fprintln(res, user.Name)
+}
+
+func loadFirstUser() User {
+	db, err := gorm.Open("sqlite3", "test.sqlite3")
+	if err != nil {
+		fmt.Println(err)
+		panic("failed to connect database")
+	}
+
+	var user User
+	db.First(&user, "name = ?", "Motoki")
+	db.Model(&user).Update("Name", "Motoki Narita")
+	return user
+}
+
+func initDB() {
+	db, err := gorm.Open("sqlite3", "test.sqlite3")
+	if err != nil {
+		fmt.Println(err)
+		panic("failed to connect database")
+	}
+
+	db.AutoMigrate(&User{})
+	db.Create(&User{Name: "Motoki"})
+}
+
+type User struct {
+	gorm.Model
+	Name string
+}
+```
+
+こんな感じで表示されるようになった。
+
+```shell
+21:20:12 main        | --------------------
+21:20:12 main        | Waiting (loop 4)...
+21:20:37 watcher     | sending event "web.go": MODIFY|ATTRIB
+21:20:37 main        | receiving first event "web.go": MODIFY|ATTRIB
+21:20:37 watcher     | sending event "web.go": MODIFY
+21:20:37 main        | sleeping for 600 milliseconds
+21:20:37 main        | flushing events
+21:20:37 main        | receiving event "web.go": MODIFY
+21:20:37 main        | Started! (14 Goroutines)
+21:20:37 build       | Building...
+21:20:38 watcher     | sending event "web.go": MODIFY|ATTRIB
+21:20:38 runner      | Running...
+21:20:38 runner      | Killing PID 61311
+21:20:38 main        | --------------------
+21:20:38 main        | Waiting (loop 5)...
+21:20:38 main        | receiving first event "web.go": MODIFY|ATTRIB
+21:20:38 main        | sleeping for 600 milliseconds
+21:20:38 app         | listnening...
+21:20:38 app         | Motoki Narita
+21:20:39 main        | flushing events
+21:20:39 main        | Started! (14 Goroutines)
+21:20:39 main        | remove tmp/runner-build-errors.log: no such file or directory
+21:20:39 build       | Building...
+21:20:40 runner      | Running...
+21:20:40 runner      | Killing PID 61514
+21:20:40 main        | --------------------
+21:20:40 main        | Waiting (loop 6)...
+21:20:40 app         | listnening...
+21:20:40 app         | Motoki Narita
+```
+
+sqlite3作るのにハマってしまったのでまだまだ感がある。
+
+次はherokuにあげてpostgresに接続したりしてみたい。
