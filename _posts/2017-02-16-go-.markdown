@@ -1,0 +1,47 @@
+---
+layout: post
+title:  "A Tour of Goを読んで「へ〜」と思ったところ その1"
+date:   2017-02-16 21:00:00 +0900
+categories: blog
+tags: golang
+---
+タイトルの通り、"A Tour of Goを読んで「へ〜」と思ったところ"という企画を何回かやってみる。
+
+Goは**かなりなんとなく**書いていて、ちゃんとこの[バイブル](https://tour.golang.org/welcome/1)を読んだことがなかったので読んでみる。
+
+## 関数の引数の型が同じ場合省略できる
+
+最後だけは書く必要がある。
+
+```golang
+func merge(x, y string) string {
+  return x + y
+}
+```
+
+
+## 名前付き戻り値が定義できる
+
+Swiftとかだとタプルで同じようなことができるけど、Goのこれはちょっと違う。
+
+```golang
+func merge(x, y string) (z string) {
+  z = x + y
+  return
+}
+```
+
+戻り値として設定したラベルを関数のスコープの中で使える、ということなのかな？
+
+## デフォルト値が設定されている
+
+Optionalのある世界に慣れすぎて他の言語ってどうだったっけ？ってなった。
+
+```golang
+var i int // 0
+var f float64 // 0
+var b bool // false
+var s string // empty string
+```
+
+次は[ここ](https://tour.golang.org/flowcontrol/1)から読んでいくよ。
