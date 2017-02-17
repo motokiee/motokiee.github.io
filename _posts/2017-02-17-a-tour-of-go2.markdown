@@ -1,0 +1,90 @@
+---
+layout: post
+title:  "A Tour of Goを読んで「へ〜」と思ったところ その2"
+date:   2017-02-17 21:00:00 +0900
+categories: blog
+tags: golang
+---
+第2回目。
+
+#### whileっぽく書ける
+
+`;`を省略して書くことで`while`っぽく書ける。
+
+```golang
+sum := 1
+for sum < 1000 {
+  sum += sum
+}
+fmt.Println(sum)
+```
+
+すごくシンプル。
+
+無限ループはこう書くらしい。
+
+```golang
+for {
+}
+```
+
+#### if文の省略形
+
+SwiftのOptional Bindingに似たような書き方ができる。
+
+```golang
+if v = math.Pow(x, n); v < lim {
+  return v
+}
+```
+上記の`v`はif文の中でしか使えない。便利な書き方だなぁ。条件を連続して書けるのも良い。
+
+
+#### 条件のない`switch`
+
+条件なしの`switch`を用いて冗長な`if-then-else`を書かないようにしよう、と書いている。これは激しく同意。
+
+```golang
+switch {
+  case t.Hour() < 12:
+    fmt.Println("Good morning")
+  case t.Hour() < 17:
+    fmt.Println("Good afternoon")
+  default:
+    fmt.Println("Good evening")
+}
+```
+網羅的で条件がひと目で分かる。`if-else`よりも圧倒的に見やすい。
+
+Swiftも同じ書き方ができるけど、条件が`true/false`の時はif文、3つ以上の条件がある場合は`switch`みたいな使い分けをしている。
+
+#### `defer`はスタックされる
+
+多分他の言語でもそうだけど、忘れそうなので書いておこう。
+
+```golang
+func main() {
+	fmt.Println("counting")
+
+	for i := 0; i < 10; i++ {
+		defer fmt.Println(i)
+	}
+
+	fmt.Println("done")
+}
+// counting
+// done
+// 9
+// 8
+// 7
+// 6
+// 5
+// 4
+// 3
+// 2
+// 1
+// 0
+```
+
+
+きょうはここまで。次は[型の章なのかな？](https://tour.golang.org/moretypes/1)
