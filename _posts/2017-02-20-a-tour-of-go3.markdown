@@ -1,0 +1,31 @@
+---
+layout: post
+title:  "A Tour of Goを読んで「へ〜」と思ったところ その3"
+date:   2017-02-20 21:00:00 +0900
+categories: blog
+tags: golang
+---
+第3回目。
+
+`struct`の書き方。
+
+初期化の際にすべてのフィールドを入れないようにすることはできるのだろうか。
+
+```golang
+type Vertex struct {
+  X int
+  Y int
+}
+v1 = Vertex{1, 2}
+v2 = Vertex{X: 1}
+```
+
+### `&`をプリフィックスにするとpointerを返す
+
+```golang
+p = &Vertex{}
+```
+
+上記の書き方だと、`X`,`Y`はデフォルト値の`0`になる。
+
+短いけどここまで。明日は[Arrayから](https://tour.golang.org/moretypes/6)。
