@@ -1,0 +1,75 @@
+---
+layout: post
+title:  "A Tour of Goを読んで「へ〜」と思ったところ その4"
+date:   2017-02-21 21:00:00 +0900
+categories: blog
+tags: golang
+---
+第4回目。1行もGoのアプリを書いていないのにGoが書けそうな気になってきた。`Array`の話。
+
+
+## `[n]T`
+
+以下のように書くと、`int`型で10個の要素を持つ配列を表す。
+
+```golang
+var a [10]int
+```
+配列長は型の一部となり、変更することはできない。
+
+もちろん可変長な配列も実現可能。
+
+## `[]T`
+
+この可変長な配列は`slice`と呼ばれる（可変長と呼ぶのが正しいのかは分からないけど動的にサイズを変更できる）。
+
+```golang
+primes := [6]int{2,3,5,7,11,13}
+var s []int = primes[1:4] // 3, 5, 7
+```
+
+`a[0:2]`のように指定するらしい。
+
+> Slices are like references to arrays
+
+と書かれており、sliceは元の配列を参照しているみたいで変更が共有されるようになっている。
+
+```golang
+primes := [6]int{2,3,5,7,11,13}
+var s []int = primes[1:4] // 3, 5, 7
+var t []int = primes[2:5] // 5, 7, 11
+fmt.Println(s, t) // [3 5 7] [5 7 11]
+t[0] = 101
+fmt.Println(s, t) // [3 101 7] [101 7 11]
+```
+
+## リテラル
+
+これがArrayのリテラル。
+```golang
+a := [2]int{1,2}
+```
+
+ここから長さを取り除くと、sliceになる。
+```golang
+s := []int{1,2}
+```
+
+この時は実際にはArrayが作られていて、そのArrayを参照するようになっているらしい。
+
+## `s[:]`
+
+sliceの際に、最小値と最大値を省略できる。
+
+```golang
+primes := [6]int{2,3,5,7,11,13}
+var s []int = primes[0:6] // 2, 3, 5, 7, 11, 13
+var s []int = primes[0:] // 2, 3, 5, 7, 11, 13
+var s []int = primes[:6] // 2, 3, 5, 7, 11, 13
+var s []int = primes[:] // 2, 3, 5, 7, 11, 13
+```
+
+これら全て同じsliceを作る。一番下の`primes[:]`なんかは初見殺し感があるけど、シンプルにかけて良い。
+
+
+疲れたのでこの辺で今日は終わり。次は[ここ](https://tour.golang.org/moretypes/11)から。
