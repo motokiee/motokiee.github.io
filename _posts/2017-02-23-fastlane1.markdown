@@ -1,0 +1,47 @@
+---
+layout: post
+title:  "fastlaneについて その1"
+date:   2017-02-23 18:00:00 +0900
+categories: blog
+tags: fastlane
+---
+Fastlaneについて。
+
+仕事で使ってみることになったのでFastlaneについて調べ始めた。
+
+
+### 環境設定
+
+fastlaneのための環境を設定していく。[ドキュメントのとおり](https://docs.fastlane.tools/getting-started/ios/setup/)に進めている。
+
+Xcode command line tools をインストール（インストール済みの場合は不要）。
+
+```bash
+$ xcode-select --install
+```
+
+fastlaneもインストール(Homebrewの場合)。
+
+```bash
+$ brew cask install fastlane
+```
+
+プロジェクトのフォルダで
+
+```bash
+$ fastlane init
+```
+
+とするといろいろゴニョゴニョするらしいけど、そこまで確認できなかった。
+
+
+### 雑なメモ
+
+- メタ情報の変更履歴を管理できるようになる
+  - これらもgit管理してPRするようになる
+- `Fastfile`を作成してリポジトリに配置する必要がある
+  - このファイルに`lane`を定義する
+  - `lane`は環境設定のようなもので`fastlane appstore`みたいにすると`Fastfile`の`appstore`設定が実行されるらしい
+
+### 参考
+- [iOSアプリ申請を驚くほど簡単に！fastlaneではじめる自動化入門](https://www.wantedly.com/companies/wantedly/post_articles/30973)
