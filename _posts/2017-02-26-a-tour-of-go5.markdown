@@ -1,0 +1,36 @@
+---
+layout: post
+title:  "A Tour of Goを読んで「へ〜」と思ったところ その5"
+date:   2017-02-26 21:00:00 +0900
+categories: blog
+tags: golang
+---
+第5回目。
+
+## sliceは`length`と`capacity`を持っている
+
+Sliceはsliceが表す配列の要素数と、sliceが参照しているArrayの要素数を取得することができる。
+
+```golang
+s := []int{2, 3, 4, 5}
+len(s) // 4
+cap(s) // 4
+s := s[:0]
+len(s) // 0
+cap(s) // 4
+```
+
+こんな感じになって、参照しているArrayの要素数は`cap(x)`で取得することができるらしい。
+
+## 要素のないsliceはnil
+
+```golang
+var s []int
+if s == nil {
+    fmt.Println("nil")
+}
+```
+
+へ〜って感じ。要素のないsliceは`nil`になるらしい。`len(x)`とかで調べるよりも良さそうな印象。
+
+休みの日の空き時間でちょっとだけ調べた感じなので今日はここまで。次は[ここ](https://tour.golang.org/moretypes/13)から。
