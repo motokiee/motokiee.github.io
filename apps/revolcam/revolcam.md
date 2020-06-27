@@ -3,7 +3,7 @@ permalink: /apps/revolcam/
 layout: page 
 ---
 
-# Reveolver Camera 
+# Revolver Camera 
 - latest version: 1.0.1
 - i18n: en, ja
 
