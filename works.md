@@ -1,6 +1,7 @@
 ---
 layout: page
-title: Apps
+title: Works 
+permalink: /works/
 ---
 ## iOS
 - [Reveolver Camera / リボカメ]({{ site.baseurl }}/apps/revolcam.html)
