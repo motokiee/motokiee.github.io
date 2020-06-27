@@ -1,6 +1,3 @@
----
-layout: page
----
 # Reveolver Camera 
 - latest version: 1.0.1
 - i18n: en, ja

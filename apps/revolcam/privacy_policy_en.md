@@ -1,7 +1,3 @@
----
-layout: page
----
-
 ## Privacy Policy
 
 This privacy policy (hereinafter referred to as "this privacy policy") is the service (hereinafter referred to as "this service") provided by the iOS application "Revolver Camer" (hereinafter referred to as "this application"). ) Describes the usage information and its handling.
