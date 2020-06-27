@@ -4,4 +4,5 @@ title: Works
 permalink: /works/
 ---
 ## iOS
-- [Reveolver Camera / リボカメ]({{ site.baseurl }}/apps/revolcam.html)
+- [Reveolver Camera / リボカメ]({{ site.baseurl }}/apps/revolcam/)
+
