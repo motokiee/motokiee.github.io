@@ -1,5 +1,5 @@
 ---
-permalink: /revolcam/
+permalink: /apps/revolcam/
 ---
 
 ## リボカメ プライバシーポリシー
